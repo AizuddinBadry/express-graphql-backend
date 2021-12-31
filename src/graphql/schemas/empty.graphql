@@ -1,0 +1,11 @@
+# Empty graphql is needed to merge schemas
+scalar JSON
+scalar JSONObject
+
+type Query {
+  _empty: String
+}
+
+type Mutation {
+  _empty: String
+}
