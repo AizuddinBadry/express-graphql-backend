@@ -3,28 +3,8 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    client: "postgresql",
-    connection: {
-      database: "policystreet_dev",
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
-    },
-  },
-
-  staging: {
-    client: "postgresql",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
-    },
+    client: "pg",
+    connection: process.env.CONNECTION_STRING,
     pool: {
       min: 2,
       max: 10,
