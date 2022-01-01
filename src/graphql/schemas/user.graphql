@@ -3,9 +3,15 @@ type Query {
 }
 
 type Mutation {
-  register(email: String!, password: String!): AuthenticateResponse!
+  register(name: String!, email: String!, password: String!): UserResponse!
 }
 
 type AuthenticateResponse {
   token: String!
+}
+
+type UserResponse {
+  name: String!
+  email: String!
+  referral_id: String!
 }

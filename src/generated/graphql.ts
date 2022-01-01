@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSON: any;
+  JSONObject: any;
 };
 
 export type AuthenticateResponse = {
@@ -21,17 +23,20 @@ export type AuthenticateResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  register: AuthenticateResponse;
+  _empty?: Maybe<Scalars['String']>;
+  register: UserResponse;
 };
 
 
 export type MutationRegisterArgs = {
   email: Scalars['String'];
+  name: Scalars['String'];
   password: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  _empty?: Maybe<Scalars['String']>;
   login: AuthenticateResponse;
 };
 
@@ -39,6 +44,13 @@ export type Query = {
 export type QueryLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  email: Scalars['String'];
+  name: Scalars['String'];
+  referral_id: Scalars['String'];
 };
 
 
@@ -112,18 +124,24 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AuthenticateResponse: ResolverTypeWrapper<AuthenticateResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']>;
+  JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  UserResponse: ResolverTypeWrapper<UserResponse>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AuthenticateResponse: AuthenticateResponse;
   Boolean: Scalars['Boolean'];
+  JSON: Scalars['JSON'];
+  JSONObject: Scalars['JSONObject'];
   Mutation: {};
   Query: {};
   String: Scalars['String'];
+  UserResponse: UserResponse;
 };
 
 export type AuthenticateResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthenticateResponse'] = ResolversParentTypes['AuthenticateResponse']> = {
@@ -131,17 +149,37 @@ export type AuthenticateResponseResolvers<ContextType = any, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+  name: 'JSON';
+}
+
+export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
+  name: 'JSONObject';
+}
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  register?: Resolver<ResolversTypes['AuthenticateResponse'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password'>>;
+  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  register?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'name' | 'password'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   login?: Resolver<ResolversTypes['AuthenticateResponse'], ParentType, ContextType, RequireFields<QueryLoginArgs, 'email' | 'password'>>;
+};
+
+export type UserResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserResponse'] = ResolversParentTypes['UserResponse']> = {
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  referral_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
   AuthenticateResponse?: AuthenticateResponseResolvers<ContextType>;
+  JSON?: GraphQLScalarType;
+  JSONObject?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  UserResponse?: UserResponseResolvers<ContextType>;
 };
 
