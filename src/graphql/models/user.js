@@ -14,6 +14,12 @@ class User extends Model {
     this.token = token;
     this.referral_id = referralCode;
   }
+
+  static async generateNewToken(id) {
+    // Generate random token
+    const token = Math.random().toString(36).substr(2, 5);
+    return await this.query().findById(id).update({ token });
+  }
 }
 
 module.exports = User;

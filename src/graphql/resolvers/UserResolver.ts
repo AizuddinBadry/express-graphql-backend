@@ -11,8 +11,11 @@ const login = async (_: void, args: QueryLoginArgs) => {
   try {
     return User.transaction(async (trx) => {
       const user = await User.query(trx).findOne({ email });
+
       const result = await bcrypt.compare(password, user.password);
+
       if (result) {
+        await User.generateNewToken(user.id);
         return user;
       } else {
         throw new Error("Wrong password or email!");

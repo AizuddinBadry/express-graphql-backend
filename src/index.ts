@@ -6,7 +6,7 @@ import cors from "cors";
 import schema from "./graphql/schemasMap";
 import query from "../src/db/connection";
 
-const PORT = 4000;
+const PORT = 4040;
 
 async function startApolloServer() {
   const server = new ApolloServer({ schema });
